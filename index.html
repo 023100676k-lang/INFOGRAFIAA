@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Infografía Taller 2.3 - CRUD con SP y Formularios</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--paper:#f8fafc}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;color:var(--paper);background:linear-gradient(180deg,#071127 0%, #09203a 100%);}
+    .container{max-width:1100px;margin:32px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));border-radius:14px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    header{display:flex;gap:18px;align-items:center}
+    .logo{width:72px;height:72px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#1e90ff);display:flex;align-items:center;justify-content:center;font-weight:700}
+    h1{margin:0;font-size:22px}
+    p.lead{color:var(--muted);margin:6px 0 22px}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:22px}
+    .card{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px}
+    .section-title{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .section-title h2{margin:0;font-size:16px}
+    table{width:100%;border-collapse:collapse;color:var(--paper);font-size:14px}
+    table th, table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left}
+    .pill{display:inline-block;background:rgba(255,255,255,0.04);padding:6px 10px;border-radius:999px;font-size:13px}
+    pre{background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;overflow:auto;color:#e6eef6}
+    .btn{display:inline-block;padding:10px 14px;background:var(--accent);color:#04202a;border-radius:10px;text-decoration:none;font-weight:600}
+    .metrics{display:flex;gap:12px}
+    .metric{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;text-align:center;flex:1}
+    .muted{color:var(--muted)}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    /* responsive */
+    @media (max-width:900px){.grid{grid-template-columns:1fr;}.logo{width:56px;height:56px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">T2.3</div>
+      <div>
+        <h1>Infografía - Taller 2.3: CRUD con Procedimientos Almacenados y Formularios</h1>
+        <p class="lead">Resumen visual y práctico para implementar operaciones CRUD (Listar, Agregar, Actualizar, Eliminar, Buscar) usando Stored Procedures y formularios de escritorio.</p>
+      </div>
+    </header>
+
+    <main class="grid" role="main">
+      <section class="card">
+        <div class="section-title"><h2>🎯 Objetivo General</h2></div>
+        <p>Desarrollar una aplicación de escritorio que implemente las operaciones <strong>CRUD</strong> sobre las tablas <strong>Usuario</strong> y <strong>Alumno</strong>, utilizando <strong>procedimientos almacenados</strong> para garantizar seguridad, rendimiento y mantenimiento eficiente de datos.</p>
+
+        <div style="margin-top:12px" class="section-title"><h2>📘 Objetivos Específicos</h2></div>
+        <ul>
+          <li>Comprender ventajas de los procedimientos almacenados.</li>
+          <li>Diseñar 5 SPs por tabla: Listar, Agregar, Actualizar, Eliminar, Buscar.</li>
+          <li>Desarrollar formularios Windows Forms que consuman los SPs.</li>
+          <li>Implementar validaciones en cliente y servidor (SP).</li>
+        </ul>
+
+        <div style="margin-top:12px" class="section-title"><h2>🧩 Componentes del Proyecto</h2></div>
+        <h3 style="margin:8px 0 6px">Tablas</h3>
+        <table>
+          <thead><tr><th>Tabla</th><th>Campos Principales</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td>Usuario</td><td>IdUsuario, Nombre, Usuario, Contraseña, Rol</td><td>Almacena credenciales y rol de acceso</td></tr>
+            <tr><td>Alumno</td><td>IdAlumno, Nombre, Apellido, DNI, Dirección, Email</td><td>Registra información general del alumno</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin:12px 0 6px">Procedimientos Almacenados (SPs)</h3>
+        <table>
+          <thead><tr><th>Operación</th><th>SP ejemplo</th><th>Función</th></tr></thead>
+          <tbody>
+            <tr><td>Listar</td><td>sp_ListarUsuario / sp_ListarAlumno</td><td>Devuelve todos los registros</td></tr>
+            <tr><td>Agregar</td><td>sp_AgregarUsuario / sp_AgregarAlumno</td><td>Inserta nuevos registros</td></tr>
+            <tr><td>Actualizar</td><td>sp_ActualizarUsuario / sp_ActualizarAlumno</td><td>Modifica un registro existente</td></tr>
+            <tr><td>Eliminar</td><td>sp_EliminarUsuario / sp_EliminarAlumno</td><td>Elimina un registro por Id</td></tr>
+            <tr><td>Buscar</td><td>sp_BuscarUsuario / sp_BuscarAlumno</td><td>Filtra registros por criterio</td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:12px" class="section-title"><h2>🖥️ Interfaz de Usuario</h2></div>
+        <div>
+          <h4>Formulario <span class="pill">frmUsuario</span></h4>
+          <ul>
+            <li>Campos: IdUsuario, Nombre, Usuario, Contraseña, Rol</li>
+            <li>Controles: DataGridView, Botones: Listar, Agregar, Actualizar, Eliminar, Buscar</li>
+            <li>Validaciones: campos obligatorios, longitud, encriptación de contraseña</li>
+          </ul>
+
+          <h4>Formulario <span class="pill">frmAlumno</span></h4>
+          <ul>
+            <li>Campos: IdAlumno, Nombre, Apellido, DNI, Dirección, Email</li>
+            <li>Validaciones: formato de email, longitud de DNI, campos obligatorios</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:12px" class="section-title"><h2>⚙️ Conexión a BD (ejemplo)</h2></div>
+        <pre><code>// C# - cadena de conexión
+private static string cadena = "server=SERVIDOR; database=DBAcademico; integrated security=true;";
+SqlConnection conexion = new SqlConnection(cadena);
+        </code></pre>
+
+        <div style="margin-top:12px" class="section-title"><h2>📊 Criterios de Evaluación</h2></div>
+        <table>
+          <thead><tr><th>Criterio</th><th>Ponderación</th><th>Descripción</th></tr></thead>
+          <tbody>
+            <tr><td>Implementación de SPs</td><td>40%</td><td>Uso correcto de los 10 SPs (5 por tabla)</td></tr>
+            <tr><td>Funcionalidad del Formulario</td><td>30%</td><td>CRUD completo funcionando</td></tr>
+            <tr><td>Consumo de SPs</td><td>15%</td><td>La app usa exclusivamente SPs</td></tr>
+            <tr><td>Validaciones</td><td>10%</td><td>Validaciones cliente/servidor</td></tr>
+            <tr><td>Código y Estilo</td><td>5%</td><td>Código limpio y manejos de excepciones</td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:12px" class="section-title"><h2>🧩 Ejemplo SP (SQL)</h2></div>
+        <pre><code>CREATE PROCEDURE sp_AgregarAlumno
+    @Nombre VARCHAR(50),
+    @Apellido VARCHAR(50),
+    @DNI CHAR(8),
+    @Direccion VARCHAR(100),
+    @Email VARCHAR(80)
+AS
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM Alumno WHERE DNI = @DNI)
+        INSERT INTO Alumno (Nombre, Apellido, DNI, Direccion, Email)
+        VALUES (@Nombre, @Apellido, @DNI, @Direccion, @Email);
+    ELSE
+        RAISERROR('El alumno con ese DNI ya existe', 16, 1);
+END;
+        </code></pre>
+
+        <div style="margin-top:12px" class="section-title"><h2>🚀 Beneficios del uso de SPs</h2></div>
+        <ul>
+          <li>Mayor seguridad (reduce inyección SQL).</li>
+          <li>Mejor rendimiento (código precompilado).</li>
+          <li>Mantenimiento centralizado de la lógica.</li>
+          <li>Consistencia y reutilización.</li>
+        </ul>
+
+        <div style="margin-top:12px" class="section-title"><h2>📦 Entregables</h2></div>
+        <ul>
+          <li>Informe en PDF (formato paper) con link al repositorio.</li>
+          <li>Repositorio GitHub con el proyecto (SQL + Visual Studio solution).</li>
+          <li>Infografía (esta página) lista para exportar a PDF/PNG.</li>
+        </ul>
+
+        <div style="margin-top:12px" class="section-title"><h2>🔚 Conclusión</h2></div>
+        <p>El Taller 2.3 integra bases de datos y programación visual para construir aplicaciones robustas, seguras y mantenibles. El dominio de SPs y validaciones permite entregar soluciones profesionales.</p>
+
+      </section>
+
+      <aside>
+        <div class="card">
+          <div class="section-title"><h2>📌 Resumen Rápido</h2></div>
+          <div class="metrics">
+            <div class="metric"><div class="muted">SPs</div><div style="font-size:18px;font-weight:700">10</div></div>
+            <div class="metric"><div class="muted">Formularios</div><div style="font-size:18px;font-weight:700">2</div></div>
+            <div class="metric"><div class="muted">Entregables</div><div style="font-size:18px;font-weight:700">3</div></div>
+          </div>
+
+          <div style="margin-top:12px" class="section-title"><h2>📋 Check-list para entregar</h2></div>
+          <ul>
+            <li>Codigo SQL: 10 SPs documentados</li>
+            <li>Proyecto Visual Studio: frmUsuario, frmAlumno</li>
+            <li>Validaciones implementadas (cliente y SP)</li>
+            <li>Informe PDF en formato paper</li>
+            <li>Link al repositorio (GitHub)</li>
+          </ul>
+
+          <div style="margin-top:12px" class="section-title"><h2>💡 Tips prácticos</h2></div>
+          <ul>
+            <li>Usa parámetros en SPs (evita concatenar SQL).</li>
+            <li>Encripta contraseñas (hash + salt) en la capa servidor.</li>
+            <li>Manejo centralizado de errores dentro de SPs y en C#.</li>
+            <li>Prueba con datos reales y casos límite (DNI duplicado, email inválido).</li>
+          </ul>
+
+          <div style="margin-top:12px;text-align:center">
+            <a class="btn" href="#" onclick="window.print();return false">Exportar/Imprimir (PDF)</a>
+          </div>
+        </div>
+
+        <div style="margin-top:16px" class="card">
+          <div class="section-title"><h2>📚 Código Ejemplo - Conexión y Llamada a SP</h2></div>
+          <pre><code>// C# - llamada a SP para Agregar Alumno
+using(SqlConnection cn = new SqlConnection(cadena)){
+    using(SqlCommand cmd = new SqlCommand("sp_AgregarAlumno", cn)){
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Nombre", txtNombre.Text);
+        cmd.Parameters.AddWithValue("@Apellido", txtApellido.Text);
+        cmd.Parameters.AddWithValue("@DNI", txtDNI.Text);
+        cmd.Parameters.AddWithValue("@Direccion", txtDireccion.Text);
+        cmd.Parameters.AddWithValue("@Email", txtEmail.Text);
+        cn.Open();
+        cmd.ExecuteNonQuery();
+    }
+}
+          </code></pre>
+        </div>
+
+      </aside>
+    </main>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div class="muted">Docente:Hespetia Huamanga Hugo</div>
+        <div class="muted">Quispe Champi Karin Rubina - Ingeniería de Sistemas</div>
+        <div class="muted">Ninancuro Carcamo Diego - Ingeniería de Sistemas</div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
